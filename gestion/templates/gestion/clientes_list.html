@@ -1,0 +1,35 @@
+{% extends 'gestion/base.html' %}
+
+{% block title %}Clientes{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Clientes Registrados</h1>
+
+<a href="/clientes/nuevo/" class="btn btn-primary mb-3">Nuevo Cliente</a>
+
+<table class="table table-bordered table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>Nombre</th>
+            <th>Teléfono</th>
+            <th>Correo</th>
+            <th>Opciones</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for cliente in clientes %}
+        <tr>
+            <td>{{ cliente.nombre }} {{ cliente.apellido }}</td>
+            <td>{{ cliente.telefono }}</td>
+            <td>{{ cliente.correo }}</td>
+            <td>
+                <a href="/clientes/editar/{{ cliente.id }}/" class="btn btn-warning btn-sm">Editar</a>
+                <a href="/clientes/eliminar/{{ cliente.id }}/" class="btn btn-danger btn-sm">Eliminar</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

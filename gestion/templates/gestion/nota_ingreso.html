@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <style>
+        body { font-family: DejaVu Sans, sans-serif; font-size: 12px; }
+        h1 { text-align: center; margin-bottom: 5px; }
+        
+        .box {
+            border: 1px solid #000;
+            padding: 12px;
+            margin-bottom: 15px;
+        }
+
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid #000; padding: 6px; font-size: 12px; }
+
+        .qr {
+            text-align: right;
+            margin-top: -70px;
+        }
+
+        .firma-box {
+            margin-top: 40px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .firma-line {
+            margin-top: 50px;
+            border-top: 1px solid #000;
+            width: 60%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+</head>
+<body>
+
+<h1>NOTA DE INGRESO - TALLER DE CELULARES</h1>
+
+<div class="qr">
+    <img src="data:image/png;base64,{{ qr_base64 }}" width="90">
+</div>
+
+<div class="box">
+    <strong>Fecha de ingreso:</strong> {{ reparacion.fecha_inicio }}<br>
+    <strong>N° Reparación:</strong> {{ reparacion.id }}
+</div>
+
+<div class="box">
+    <h3>Datos del Cliente</h3>
+    <strong>Nombre:</strong> {{ reparacion.dispositivo.cliente.nombre }} {{ reparacion.dispositivo.cliente.apellido }}<br>
+    <strong>Teléfono:</strong> {{ reparacion.dispositivo.cliente.telefono }}
+</div>
+
+<div class="box">
+    <h3>Datos del Dispositivo</h3>
+    <strong>Marca:</strong> {{ reparacion.dispositivo.marca }}<br>
+    <strong>Modelo:</strong> {{ reparacion.dispositivo.modelo }}<br>
+    <strong>IMEI:</strong> {{ reparacion.dispositivo.imei }}<br>
+    <strong>Falla reportada:</strong> {{ reparacion.dispositivo.descripcion_falla }}
+</div>
+
+<div class="box">
+    <h3>Diagnóstico del Técnico</h3>
+    <p>{{ reparacion.diagnostico }}</p>
+</div>
+
+<div class="box">
+    <h3>Repuestos Utilizados</h3>
+
+    <table>
+        <tr>
+            <th>Repuesto</th>
+            <th>Cantidad</th>
+            <th>Precio Unit.</th>
+        </tr>
+        {% for r in repuestos %}
+        <tr>
+            <td>{{ r.repuesto.nombre }}</td>
+            <td>{{ r.cantidad }}</td>
+            <td>{{ r.repuesto.precio }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+<div class="box">
+    <h3>Costo Total</h3>
+    <strong>Mano de obra:</strong> Bs {{ reparacion.costo_mano_obra }}<br>
+</div>
+
+<div class="box firma-box">
+    <h3>Firma de Entrega</h3>
+    <div class="firma-line"></div>
+    <p>Firma del Cliente</p>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,41 @@
+{% extends "gestion/base.html" %}
+{% load widget_tweaks %}
+{% block title %}Crear Usuario Admin{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center mt-5">
+    <div class="col-md-6">
+        <div class="card shadow">
+            <div class="card-header bg-success text-white">
+                <h4 class="mb-0">Crear Nuevo Usuario Administrador</h4>
+            </div>
+            <div class="card-body">
+                
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    {% for field in form %}
+                        <div class="mb-3">
+                            <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                            
+                            {{ field|add_class:"form-control" }}
+                            
+                            {% if field.errors %}
+                                <div class="alert alert-danger mt-1 p-2 small">{{ field.errors }}</div>
+                            {% endif %}
+                            {% if field.help_text %}
+                                <small class="form-text text-muted">{{ field.help_text|safe }}</small>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-success mt-3">Registrar Usuario</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

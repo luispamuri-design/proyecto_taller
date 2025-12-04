@@ -1,0 +1,21 @@
+Django==5.0.3
+psycopg2-binary==2.9.9
+
+# Para generar PDF (WeasyPrint es pesado, mejor opción xhtml2pdf)
+xhtml2pdf==0.2.10
+
+# Para generar QR
+qrcode==7.4.2
+Pillow==10.0.1
+
+# Manejo de variables de entorno
+python-dotenv==1.0.1
+
+# Bootstrap no necesita instalarse (usa CDN)
+djangorestframework==3.15.1
+
+twilio==9.0.0
+
+celery==5.3.6
+
+redis==5.0.1

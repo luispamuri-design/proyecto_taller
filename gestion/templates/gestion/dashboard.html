@@ -1,0 +1,120 @@
+{% extends 'gestion/base.html' %}
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+
+<h2 class="mb-4">panel principal</h2>
+
+<div class="row mb-4">
+
+    <div class="col-md-3">
+        <div class="card bg-primary text-white p-3 shadow">
+            <h4>{{ total_clientes }}</h4>
+            <p>Clientes registrados</p>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card bg-success text-white p-3 shadow">
+            <h4>{{ total_dispositivos }}</h4>
+            <p>Dispositivos registrados</p>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card bg-warning text-dark p-3 shadow">
+            <h4>{{ rep_en_proceso }}</h4>
+            <p>Reparaciones en proceso</p>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card bg-info text-dark p-3 shadow">
+            <h4>{{ rep_finalizadas }}</h4>
+            <p>Reparaciones finalizadas</p>
+        </div>
+    </div>
+
+</div>
+
+
+
+<!-- STOCK BAJO -->
+<div class="card p-3 mb-4 shadow">
+    <h4>Repuestos con stock bajo</h4>
+    <ul>
+        {% for r in repuestos_bajo_stock %}
+            <li>{{ r.nombre }} — Stock: {{ r.stock }}</li>
+        {% empty %}
+            <li>No hay repuestos con stock bajo.</li>
+        {% endfor %}
+    </ul>
+</div>
+
+<!-- ÚLTIMAS REPARACIONES -->
+<div class="card p-3 mb-4 shadow">
+    <h4>Últimas reparaciones</h4>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Dispositivo</th>
+                <th>Técnico</th>
+                <th>Estado</th>
+                <th>Fecha</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for r in ultimas_reparaciones %}
+            <tr>
+                <td>{{ r.id }}</td>
+                <td>{{ r.dispositivo }}</td>
+                <td>{{ r.tecnico }}</td>
+                <td>{{ r.estado }}</td>
+                <td>{{ r.fecha_inicio }}</td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="5">Sin reparaciones recientes</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<!-- GRÁFICO -->
+<div class="card p-3 shadow">
+    <h4>Reparaciones por mes</h4>
+    <canvas id="graficoMeses"></canvas>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    const ctx = document.getElementById('graficoMeses');
+
+    const meses = [
+        {% for r in reparaciones_por_mes %}
+            "{{ r.mes|date:'F Y' }}",
+        {% endfor %}
+    ];
+
+    const totales = [
+        {% for r in reparaciones_por_mes %}
+            {{ r.total }},
+        {% endfor %}
+    ];
+
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: meses,
+            datasets: [{
+                label: 'Reparaciones por mes',
+                data: totales,
+                borderWidth: 2
+            }]
+        }
+    });
+</script>
+
+{% endblock %}

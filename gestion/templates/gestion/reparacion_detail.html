@@ -1,0 +1,38 @@
+{% extends 'gestion/base.html' %}
+{% block title %}Detalle Reparación{% endblock %}
+
+{% block content %}
+<h1>Reparación #{{ reparacion.id }}</h1>
+
+<div class="card p-3 mb-3">
+  <p><strong>Dispositivo:</strong> {{ reparacion.dispositivo }}</p>
+  <p><strong>Cliente:</strong> {{ reparacion.dispositivo.cliente }}</p>
+  <p><strong>Técnico:</strong> {{ reparacion.tecnico }}</p>
+  <p><strong>Diagnóstico:</strong> {{ reparacion.diagnostico }}</p>
+  <p><strong>Estado:</strong> {{ reparacion.estado }}</p>
+  <p><strong>Fecha inicio:</strong> {{ reparacion.fecha_inicio }}</p>
+  <p><strong>Fecha fin:</strong> {{ reparacion.fecha_fin }}</p>
+  <p><strong>Mano de obra:</strong> Bs {{ reparacion.costo_mano_obra }}</p>
+</div>
+
+<div class="card p-3 mb-3">
+  <h5>Repuestos usados</h5>
+  <table class="table">
+    <thead><tr><th>Repuesto</th><th>Cantidad</th><th>Precio unit.</th></tr></thead>
+    <tbody>
+      {% for ru in repuestos_usados %}
+      <tr>
+        <td>{{ ru.repuesto.nombre }}</td>
+        <td>{{ ru.cantidad }}</td>
+        <td>{{ ru.repuesto.precio }}</td>
+      </tr>
+      {% empty %}
+      <tr><td colspan="3">No se han registrado repuestos</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<a href="/reparaciones/editar/{{ reparacion.id }}/" class="btn btn-warning">Editar</a>
+<a href="/reparaciones/" class="btn btn-secondary">Volver</a>
+{% endblock %}

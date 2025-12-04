@@ -1,0 +1,17 @@
+{% extends 'gestion/base.html' %}
+
+{% block title %}Agregar Repuesto{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Agregar repuesto a la reparación #{{ reparacion.id }}</h2>
+
+<form method="POST">
+    {% csrf_token %}
+    <div class="card p-4 shadow">
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-success">Agregar</button>
+        <a href="/reparaciones/" class="btn btn-secondary">Cancelar</a>
+    </div>
+</form>
+
+{% endblock %}

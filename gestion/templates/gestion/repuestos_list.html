@@ -1,0 +1,37 @@
+{% extends 'gestion/base.html' %}
+
+{% block title %}Repuestos{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Inventario de Repuestos</h1>
+
+<a href="/repuestos/nuevo/" class="btn btn-primary mb-3">Nuevo Repuesto</a>
+
+<table class="table table-bordered table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>Stock</th>
+            <th>Precio</th>
+            <th>Opciones</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for r in repuestos %}
+        <tr>
+            <td>{{ r.nombre }}</td>
+            <td>{{ r.descripcion }}</td>
+            <td>{{ r.stock }}</td>
+            <td>Bs {{ r.precio }}</td>
+            <td>
+                <a href="/repuestos/editar/{{ r.id }}/" class="btn btn-warning btn-sm">Editar</a>
+                <a href="/repuestos/eliminar/{{ r.id }}/" class="btn btn-danger btn-sm">Eliminar</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

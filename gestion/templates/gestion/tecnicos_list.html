@@ -1,0 +1,35 @@
+{% extends 'gestion/base.html' %}
+
+{% block title %}Técnicos{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Técnicos</h1>
+
+<a href="/tecnicos/nuevo/" class="btn btn-primary mb-3">Nuevo Técnico</a>
+
+<table class="table table-bordered table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>Nombre</th>
+            <th>Especialidad</th>
+            <th>Teléfono</th>
+            <th>Opciones</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for t in tecnicos %}
+        <tr>
+            <td>{{ t.nombre }}</td>
+            <td>{{ t.especialidad }}</td>
+            <td>{{ t.telefono }}</td>
+            <td>
+                <a href="/tecnicos/editar/{{ t.id }}/" class="btn btn-warning btn-sm">Editar</a>
+                <a href="/tecnicos/eliminar/{{ t.id }}/" class="btn btn-danger btn-sm">Eliminar</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
